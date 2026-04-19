@@ -1,32 +1,34 @@
 import { useEffect, useState, useRef } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import LZString from "lz-string"
 import styles from "./note.module.css"
 
 const BIN_ID = import.meta.env.VITE_BIN_ID
 const API_KEY = import.meta.env.VITE_API_KEY
 
-const saveLatest = async (base64) => {
+const encode = (text) => LZString.compressToEncodedURIComponent(text)
+const decode = (str) => LZString.decompressFromEncodedURIComponent(str) || ""
+
+const saveLatest = async (compressed) => {
     await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
-        body: JSON.stringify({ latest: base64 })
+        body: JSON.stringify({ latest: compressed })
     })
 }
 
 const getLatest = async () => {
-    
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
         headers: { "X-Master-Key": API_KEY }
     })
     const data = await res.json()
-    console.log(data)
     return data.record?.latest || ""
 }
 
 function Note() {
     const navigate = useNavigate()
     const { text: encodedText } = useParams()
-    const [newText, setNewText] = useState(() => encodedText ? atob(encodedText) : "")
+    const [newText, setNewText] = useState(() => encodedText ? decode(encodedText) : "")
     const [isReading, setIsReading] = useState(true)
     const [loading, setLoading] = useState(!encodedText)
     const [isRefreshing, setIsRefreshing] = useState(false)
@@ -34,23 +36,21 @@ function Note() {
     const readingTimer = useRef(null)
     const newlineTimer = useRef(null)
 
-    // load latest on mount
     useEffect(() => {
         if (!encodedText) {
             getLatest().then(latest => {
                 if (latest) {
-                    setNewText(atob(latest))
+                    setNewText(decode(latest))
                     navigate(`/note/${latest}`, { replace: true })
                 }
                 setLoading(false)
             })
-        }else{
-            setNewText(atob(encodedText))
+        } else {
+            setNewText(decode(encodedText))
             setLoading(false)
         }
     }, [encodedText])
 
-    // reading fade timer
     const resetTimer = () => {
         setIsReading(false)
         clearTimeout(readingTimer.current)
@@ -65,14 +65,13 @@ function Note() {
         }
     }, [])
 
-    // save on text change
     useEffect(() => {
         if (isFirstRender.current) { isFirstRender.current = false; return }
         const timeout = setTimeout(() => {
             if (newText) {
-                const base64 = btoa(newText)
-                saveLatest(base64)
-                navigate(`/note/${base64}`, { replace: true })
+                const compressed = encode(newText)
+                saveLatest(compressed)
+                navigate(`/note/${compressed}`, { replace: true })
             }
         }, 500)
         return () => clearTimeout(timeout)
@@ -81,7 +80,6 @@ function Note() {
     const handleChange = (e) => {
         const val = e.target.value
         if (val.length < newText.length) return
-
         const added = val.slice(newText.length)
         if (added === "\n") {
             newlineTimer.current = setTimeout(() => {
@@ -90,7 +88,6 @@ function Note() {
         } else {
             clearTimeout(newlineTimer.current)
         }
-
         setNewText(val)
     }
 
@@ -98,7 +95,7 @@ function Note() {
         setIsRefreshing(true)
         getLatest().then(latest => {
             if (latest) {
-                setNewText(atob(latest))
+                setNewText(decode(latest))
                 navigate(`/note/${latest}`, { replace: true })
             }
             setIsRefreshing(false)
