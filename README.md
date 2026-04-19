@@ -1,16 +1,41 @@
-# React + Vite
+# chaotic-note
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+a note that lives in the url. pass it to someone. they can't delete what you wrote.
 
-Currently, two official plugins are available:
+## how it works
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+every time you type, the note gets encoded into the url. send that url to someone — they open it, see what you wrote, add their own words, and send a new url back. no accounts, no backend, no database holding your thoughts hostage.
 
-## React Compiler
+the only rule: you can't delete anything. not yours, not theirs.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## features
 
-## Expanding the ESLint configuration
+- **the link is the document** — the entire note is base64 encoded in the url
+- **no deletions** — once written, it stays
+- **read-only fade** — the page dims after 5 seconds of inactivity, brightens when you move
+- **shared latest** — `/note` always loads the most recently updated version via jsonbin
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## run locally
+
+```bash
+git clone https://github.com/yourusername/chaotic-note
+cd chaotic-note
+npm install
+```
+
+create a `.env` file at the root:
+
+```
+VITE_BIN_ID=your_bin_id
+VITE_API_KEY="your_api_key"
+```
+
+then:
+
+```bash
+npm run dev
+```
+
+## live
+
+[chaotic-note.vercel.app](https://chaotic-note.vercel.app)
