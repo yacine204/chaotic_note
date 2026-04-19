@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+.outer {
+    background-color: #0f0f0f;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transition: opacity 0.8s ease;
+}
+
+.reading {
+    opacity: 0.5;
+}
+
+.box {
+    width: 680px;
+    padding: 60px 0 80px;
+}
+
+
+.segment {
+    position: relative;
+    display: block;
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #888880;
+    white-space: pre-wrap;
+    margin-bottom: 4px;
+}
+
+.attribution {
+    font-style: italic;
+    font-size: 14px;
+    color: #555550;
+}
+
+.timestamp {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 12px;
+    color: #555550;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    min-height: 200px;
+    color: #e8e6e1;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    line-height: 1.8;
+    outline: none;
+    font-family: 'Lora', serif;
+    padding: 0;
+    resize: none;
+    caret-color: #e8e6e1;
+}
+
+.input::placeholder {
+    color: #444440;
+}
+
+
+.promptOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.prompt {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.prompt p {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    color: #e8e6e1;
+    margin: 0;
+}
+
+.promptInput {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #444440;
+    color: #e8e6e1;
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    padding: 4px 0;
+    outline: none;
+    width: 240px;
+    caret-color: #e8e6e1;
+}
+
+.promptBtn {
+    background: transparent;
+    border: none;
+    color: #555550;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-style: italic;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.promptBtn:hover { color: #e8e6e1; }
+
+
+.refresh {
+    position: fixed;
+    top: 28px;
+    right: 36px;
+    background: transparent;
+    border: none;
+    color: #e8e6e1;
+    opacity: 0.25;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s;
+    display: flex;
+}
+
+.refresh:hover { opacity: 0.8; }
+
+.spinning {
+    animation: spin 1s linear infinite;
+    opacity: 0.6;
+}
+
+.loadingText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: #444440;
+    font-style: italic;
+    animation: blink 1.2s step-end infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
