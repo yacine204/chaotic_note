@@ -2,12 +2,14 @@
 
 .outer {
     background-color: #0f0f0f;
-    min-height: 100vh;
+    height: 100vh;          
     width: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;      
     transition: opacity 0.8s ease;
 }
+
 
 .reading {
     opacity: 0.5;
@@ -15,6 +17,7 @@
 
 .box {
     width: 680px;
+    height: 100vh;
     padding: 60px 0 80px;
 }
 
@@ -49,6 +52,7 @@
 
 .input {
     display: block;
+    height: 100%;
     width: 100%;
     min-height: 200px;
     color: #e8e6e1;
@@ -60,6 +64,7 @@
     font-family: 'Lora', serif;
     padding: 0;
     resize: none;
+    overflow-y: auto;
     caret-color: #e8e6e1;
 }
 
