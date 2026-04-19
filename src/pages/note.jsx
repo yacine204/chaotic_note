@@ -21,7 +21,7 @@ const getLatest = async () => {
     })
     const data = await res.json()
     console.log(data)
-    return data.record?.latest | ""
+    return data.record?.latest || ""
 }
 
 function Note() {
@@ -45,8 +45,11 @@ function Note() {
                 }
                 setLoading(false)
             })
+        }else{
+            setNewText(atob(encodedText))
+            setLoading(false)
         }
-    }, [])
+    }, [encodedText])
 
     // reading fade timer
     const resetTimer = () => {
