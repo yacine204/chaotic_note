@@ -4,8 +4,6 @@ import styles from "./note.module.css"
 
 const BIN_ID = import.meta.env.VITE_BIN_ID
 const API_KEY = import.meta.env.VITE_API_KEY
-console.log(import.meta.env.VITE_BIN_ID)
-console.log(import.meta.env.VITE_API_KEY)
 
 const saveLatest = async (base64) => {
     await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
@@ -20,7 +18,6 @@ const getLatest = async () => {
         headers: { "X-Master-Key": API_KEY }
     })
     const data = await res.json()
-    console.log(data)
     return data.record?.latest | ""
 }
 
