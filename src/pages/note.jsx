@@ -14,10 +14,13 @@ const saveLatest = async (base64) => {
 }
 
 const getLatest = async () => {
+    console.log("BIN:", import.meta.env.VITE_BIN_ID)
+    console.log("KEY:", import.meta.env.VITE_API_KEY)
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
         headers: { "X-Master-Key": API_KEY }
     })
     const data = await res.json()
+    console.log(data)
     return data.record?.latest | ""
 }
 
