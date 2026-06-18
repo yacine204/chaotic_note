@@ -2,6 +2,7 @@
 
 a note that lives in the url. pass it to someone. they can't delete what you wrote.
 
+![showcase](showcase.png)
 ## how it works
 
 every time you type, the note gets encoded into the url. send that url to someone — they open it, see what you wrote, add their own words, and send a new url back. no accounts, no backend, no database holding your thoughts hostage.
